@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LinkPreviewサンプル</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    img {
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h4></h4>
+  <a><img src=""/></a>
+
+  <script>
+
+    const data = {
+      key: '**************', //ご自身のAPIキーに置き換えてください
+      q: 'https://paiza.jp/' //任意のURLで試してみてください
+    }
+
+
+    //プレビュー表示用の関数
+    const createIMG = json => {
+
+      document.querySelector('img').src = json.image;
+      document.querySelector('h4').textContent = json.title;
+      document.querySelector('a').href = json.url;
+
+    }
+
+
+    //LinkPreviewを利用した通信処理
+    fetch('https://api.linkpreview.net', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(data),
+    })
+    .then(data => data.json())
+    .then(json => createIMG(json));
+
+
+
+    /*
+    // jQueryの場合
+    // https://code.jquery.com/jquery-3.5.1.min.js
+
+    $.ajax({
+        url: "https://api.linkpreview.net",
+        // dataType: "jsonp",
+        data: {q:'https://paiza.jp', key: '***************'},
+        success: function (response) {
+            console.log(response);
+        }
+    });
+    */
+
+  </script>
+</body>
+</html>
